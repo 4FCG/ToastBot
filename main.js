@@ -2,13 +2,15 @@ const Client = {
   Discord: require("discord.js"),
   config: require("./config.json"),
   commands: {},
-  load: require("./load.js")
+  load: require("./load.js"),
+  table: require("./tables.js")
 }
 Client.bot = new Client.Discord.Client();
 
 Client.load.func(Client);
 
 Client.bot.on("ready", () => {
+  Client.table.func(Client);
 	console.log("Bot is connected!");
   console.log("Prefix set to " + Client.config.prefix);
   Client.bot.user.setGame("Node.js");
