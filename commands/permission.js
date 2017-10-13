@@ -55,17 +55,13 @@ module.exports = {
         }
         else if (args[0] === 'giveall') {
           if (args[1]) {
-            let query = "";
+            let erro = 0;
             fs.readdirSync('./commands/').forEach(function(command){
-              let query = query + 'UPDATE `bot_test`.`' + msg.guild.id + '` SET `' + command + '` = 1 WHERE `roles` = "' + args[1] + '";';
+              let query ='UPDATE `bot_test`.`' + msg.guild.id + '` SET `' + command + '` = 1 WHERE `roles` = "' + args[1] + '";';
               connection.query(query, function(err, result){
-                if(err){
-                  console.log(err);
-                  return msg.channel.send(`Something went wrong, perhaps a typo?\nMake shure to use //permission,giveall,role`);
-                }
+                if(err){return console.log(err);}
               });
             });
-
           }
           else {
             msg.channel.send('Please specify the role to give all rights.');
@@ -76,10 +72,7 @@ module.exports = {
             fs.readdirSync('./commands/').forEach(function(command){
               let query = 'UPDATE `bot_test`.`' + msg.guild.id + '` SET `' + command + '` = 0 WHERE `roles` = "' + args[1] + '";';
               connection.query(query, function(err, result){
-                if(err){
-                  console.log(err);
-                  return msg.channel.send(`Something went wrong, perhaps a typo?\nMake shure to use //permission,revokeall,role`);
-                }
+                if(err){return console.log(err);}
               });
             });
           }
