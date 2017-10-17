@@ -23,7 +23,7 @@ module.exports = {
         else if (args[0] === "change") {
           if (args[1] && args[2] && args[3]) {
             if (args[3] === "true") {args[3]=1;} else {args[3]=0;}
-            let query = 'UPDATE `bot_test`.`' + msg.guild.id + '` SET `' + args[1] + '.js` = ' + args[3] + ' WHERE `roles` = "' + args[2] + '";';
+            let query = 'UPDATE `bot_test`.`' + msg.guild.id + '` SET `' + args[1].match(/^[^'"`;]+$/g) + '.js` = ' + args[3] + ' WHERE `roles` = "' + args[2].match(/^[^'"`;]+$/g) + '";';
             connection.query(query,function(err){
               if(err){
                 console.log(err);
@@ -55,9 +55,8 @@ module.exports = {
         }
         else if (args[0] === 'giveall') {
           if (args[1]) {
-            let erro = 0;
             fs.readdirSync('./commands/').forEach(function(command){
-              let query ='UPDATE `bot_test`.`' + msg.guild.id + '` SET `' + command + '` = 1 WHERE `roles` = "' + args[1] + '";';
+              let query ='UPDATE `bot_test`.`' + msg.guild.id + '` SET `' + command + '` = 1 WHERE `roles` = "' + args[1].match(/^[^'"`;]+$/g) + '";';
               connection.query(query, function(err, result){
                 if(err){return console.log(err);}
               });
@@ -70,7 +69,7 @@ module.exports = {
         else if (args[0] === 'revokeall') {
           if (args[1]) {
             fs.readdirSync('./commands/').forEach(function(command){
-              let query = 'UPDATE `bot_test`.`' + msg.guild.id + '` SET `' + command + '` = 0 WHERE `roles` = "' + args[1] + '";';
+              let query = 'UPDATE `bot_test`.`' + msg.guild.id + '` SET `' + command + '` = 0 WHERE `roles` = "' + args[1].match(/^[^'"`;]+$/g) + '";';
               connection.query(query, function(err, result){
                 if(err){return console.log(err);}
               });

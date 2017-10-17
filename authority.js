@@ -13,15 +13,16 @@ const checkrole = function(command, msg, connection, role) {
 }
 module.exports = {
     func: (com, message, con, roles) => {
+      com = com.match(/^[^'"`;]+$/g);
       if (!roles) {
         let packager = [];
         message.member.roles.array().forEach(function(r) {
-          packager.push(checkrole(com, message, con, r.name));
+          packager.push(checkrole(com, message, con, r.name.match(/^[^'"`;]+$/g)));
         });
         return packager;
       }
       else {
-        return checkrole(com, message, con, roles);
+        return checkrole(com, message, con, roles.match(/^[^'"`;]+$/g));
       }
       message.delete();
     }
