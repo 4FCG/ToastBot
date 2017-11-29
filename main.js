@@ -7,6 +7,9 @@ const conn = mysql.createConnection({
   password  : config.sqlpass,
   database  : "bot_test"
 });
+
+module.exports = conn;
+
 const Client = {
   Discord: require("discord.js"),
   config: require("./config.json"),
