@@ -1,34 +1,40 @@
 const connection = require('./main.js');
+const mysql = require('mysql');
+
+const query_INSERT = 'INSERT INTO ?? (User_ID, Given_By_ID, Type, Expire_Time, Comment) VALUES (?, ?, ?, ?, ?);';
 
 module.exports =  {
   apply: function (target, source, type, time, note) {
     if (type === "ban") {
       target.ban({days : 7,reason : note}); //7 should be a setting (days of messages to remove of the banned player)
-      let query = 'INSERT INTO `' + target.guild.id + '_status` (User_ID, Given_By_ID, Type, Expire_Time, Comment) VALUES ("' + target.id + source + 'Ban' + time + note + '");';
+	  let inserts = [target.guild.id + '_status', target.id, source, 'Ban', time, note];
+	  let query = mysql.format(query_INSERT, inserts);
       connection.query(query, function (error, results, fields) {});
     }
     else if (type === "warn") {
-      let query = 'SELECT COUNT(Status_ID) FROM `' + target.guild.id + '_status` WHERE `Type`="Warn" AND `User_ID`="' + target.id + '";';
+      let query = 'SELECT COUNT(Status_ID) AS data FROM `' + target.guild.id + '_status` WHERE `Type`="Warn" AND `User_ID`="' + target.id + '";';
       connection.query(query, function (error, results, fields) {
-        if (results[0] + 1 >= 5) { //5 should be a setting (warns before ban)
+        if (results[0].data + 1 >= 5) { //5 should be a setting (warns before ban)
           let query_2 = 'DELETE FROM `' + target.guild.id + '_status` WHERE `Type`="Warn" AND `User_ID`="' + target.id + '";';
           connection.query(query_2, function (error, results, fields) {});
           let date = new Date();
           this.apply(target, source, 'ban', date.getTime() + 300000, note); //auto ban time should be a setting
         }
         else {
-          let query_2 = 'INSERT INTO `' + target.guild.id + '_status` (User_ID, Given_By_ID, Type, Expire_Time, Comment) VALUES ("' + target.id + source + 'Warn' + time + note + '");';
+		      let inserts = [target.guild.id + '_status', target.id, source, 'Warn', time, note];
+		      let query_2 = mysql.format(query_INSERT, inserts);
           connection.query(query_2, function (error, results, fields) {});
         }
       });
     }
     else if (type === "mute") {
       target.setMute(true, note);
-      let mute = target.guild.roles.find('name','Mute');
+      let mute = target.guild.roles.find('name','Mute'); //hardcoded role should be a setting or automatically generated
       if (!target.roles.get(mute.id)) {
         target.addRole(mute);
       }
-      let query = 'INSERT INTO `' + target.guild.id + '_status` (User_ID, Given_By_ID, Type, Expire_Time, Comment) VALUES ("' + target.id + source + 'Mute' + time + note + '");';
+	  let inserts = [target.guild.id + '_status', target.id, source, 'Mute', time, note];
+	  let query = mysql.format(query_INSERT, inserts);
       connection.query(query, function (error, results, fields) {});
     }
   },
@@ -47,5 +53,11 @@ module.exports =  {
       let query = 'DELETE FROM `' + target.guild.id + '_status` WHERE `Type`="Mute" AND `User_ID`="' + target.id + '";';
       connection.query(query, function (error, results, fields) {});
     }
+  	else if (type === "warn") {
+  		let query = 'DELETE FROM ?? WHERE `Status_ID`=? AND `Type`="Warn";';
+  		let inserts = [target.guild.id + '_status', id];
+  		query = mysql.format(query, inserts);
+  		connection.query(query, function (error, results, fields) {});
+  	}
   }
 }
