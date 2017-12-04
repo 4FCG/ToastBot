@@ -8,8 +8,6 @@ const conn = mysql.createConnection({
   database  : "bot_test"
 });
 
-module.exports = conn;
-
 const Client = {
   Discord: require("discord.js"),
   config: require("./config.json"),
@@ -28,6 +26,11 @@ conn.connect(function(err) {
 });
 
 Client.bot = new Client.Discord.Client();
+
+module.exports = {
+	connect : conn,
+	bot : Client.bot
+};
 
 Client.load.func(Client);
 
