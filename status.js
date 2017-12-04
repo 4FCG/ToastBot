@@ -29,7 +29,7 @@ module.exports =  {
     }
     else if (type === "mute") {
       target.setMute(true, note);
-      let mute = target.guild.roles.find('name','Mute'); //hardcoded role should be a setting or automatically generated
+      let mute = target.guild.roles.find('name', 'toastbot_mute');
       if (!target.roles.get(mute.id)) {
         target.addRole(mute);
       }
@@ -46,7 +46,7 @@ module.exports =  {
     }
     else if (type === "mute") {
       target.setMute(false, note);
-      let mute = target.guild.roles.find('name','Mute');
+      let mute = target.guild.roles.find('name', 'toastbot_mute');
       if (target.roles.get(mute.id)) {
         target.removeRole(mute);
       }
