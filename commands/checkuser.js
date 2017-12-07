@@ -1,4 +1,5 @@
-const connection = require('../main.js');
+const main = require('../main.js');
+const connection = main.connect;
 const status = require('../status.js');
 const mysql = require('mysql');
 

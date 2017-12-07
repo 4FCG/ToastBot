@@ -1,10 +1,12 @@
-const connection = require('../main.js');
+const main = require('../main.js');
+const connection = main.connect;
 const status = require('../status.js');
 
 module.exports = {
     Description: 'Warn a user.',
     Usage: 'warn, @user, time(minutes), [reason]',
     func: (Client, message, args) => {
+      args[1] = Number(args[1].replace(" ", ""));
 			if (typeof message.mentions.members.first() !== 'undefined' && Number.isInteger(args[1])) {
 				let target = message.mentions.members.first();
 				let date = new Date();
@@ -15,6 +17,5 @@ module.exports = {
 			else {
 				message.channel.send("Please supply the proper arguments: warn, @user, time(in minutes), [reason]");
 			}
-        });
     }
 }

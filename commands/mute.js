@@ -1,15 +1,14 @@
-const connection = require('../main.js');
+const main = require('../main.js');
+const connection = main.connect;
 const status = require('../status.js');
 
 module.exports = {
     Description: 'Mute a user.',
     Usage: 'mute, @user, time(minutes), [reason]',
     func: (Client, message, args) => {
+      args[1] = Number(args[1].replace(" ", ""));
 			if (typeof message.mentions.members.first() !== 'undefined' && Number.isInteger(args[1])) {
 				let target = message.mentions.members.first();
-				if (!target.guild.roles.find('name', 'toastbot_mute')) {
-					target.guild.createRole({name: 'toastbot_mute'});
-				}
 				let query = 'SELECT COUNT(Status_ID) AS data FROM `' + target.guild.id + '_status` WHERE `Type`="Mute" AND `User_ID`="' + target.id + '";';
 				connection.query(query, function (error, results, fields) {
 					if(results[0].data === 0 && !target.serverMute){
@@ -26,6 +25,5 @@ module.exports = {
 			else {
 				message.channel.send("Please supply the proper arguments: mute, @user, time(in minutes), [reason]");
 			}
-        });
     }
 }

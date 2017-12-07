@@ -5,6 +5,12 @@ const fs = require('fs');
 module.exports = {
   func: (Client, msg, args, connection) => {
     Client.bot.guilds.array().forEach(function(guild){
+
+      if (guild.roles.find('name', 'toastbot_mute') === null) {
+        guild.createRole({name: 'toastbot_mute'})
+        .then(rolee => console.log(`Created role ${rolee}`));
+      }
+
       let query = 'CREATE TABLE IF NOT EXISTS`' + guild.id + '` (`roles` VARCHAR(45) NOT NULL,';
       fs.readdirSync('./commands/').forEach(function(command){
         query = query + '`' + command + '` INT NOT NULL DEFAULT 0,';

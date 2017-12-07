@@ -1,10 +1,12 @@
-const connection = require('../main.js');
+const main = require('../main.js');
+const connection = main.connect;
 const status = require('../status.js');
 
 module.exports = {
     Description: 'Ban a user.',
     Usage: 'ban, @user, time(minutes), [reason]',
     func: (Client, message, args) => {
+      args[1] = Number(args[1].replace(" ", ""));
 			if (typeof message.mentions.members.first() !== 'undefined' && Number.isInteger(args[1])) {
 				let target = message.mentions.members.first();
 				let query = 'SELECT COUNT(Status_ID) AS data FROM `' + target.guild.id + '_status` WHERE `Type`="Ban" AND `User_ID`="' + target.id + '";';
@@ -26,6 +28,5 @@ module.exports = {
 			else {
 				message.channel.send("Please supply the proper arguments: ban, @user, time(in minutes), [reason]");
 			}
-        });
     }
 }

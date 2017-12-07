@@ -1,4 +1,5 @@
-const connection = require('../main.js');
+const main = require('../main.js');
+const connection = main.connect;
 const status = require('../status.js');
 
 module.exports = {
@@ -14,8 +15,8 @@ module.exports = {
 						if(results[0].data === 0 && target.bannable && !bans.get(target.id)){
 							let date = new Date();
 							let time = date.getTime() + ((args[1]*60)*1000);
-							if (!args[2]) {args[2]=' ';}
-							status.apply(target, message.author.id, 'ban', time, args[2]);
+							if (!args[1]) {args[1]=' ';}
+							status.remove(message.guild, 'ban', {note: args[1], id : args[0]});
 						}
 						else {
 							message.channel.send('Failed to ban the user, missing permissions or the user is already banned.');
@@ -26,6 +27,5 @@ module.exports = {
 			else {
 				message.channel.send("Please supply the proper arguments: unban, ban_id, [reason]");
 			}
-        });
     }
 }
