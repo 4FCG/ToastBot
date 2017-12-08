@@ -40,16 +40,9 @@ module.exports =  {
   },
   remove: function (target, type, extra) {
     if (type === "ban") {
-	  let query_user = 'SELECT User_ID AS id FROM ?? WHERE `Status_ID`=?;';
-	  let inserts = [target.id + '_status', extra.id];
-	  connection.query(mysql.format(query_user, inserts), function (error, results, fields) {
-		client.bot.fetchUser(results[0].id)
-		.then(user => {
-			target.unban(user, extra.note);
-			let query = 'DELETE FROM `' + target.id + '_status` WHERE `Type`="Ban" AND `User_ID`="' + user.id + '";';
+			target.unban(target, extra.note);
+			let query = 'DELETE FROM `' + extra.id + '_status` WHERE `Type`="Ban" AND `User_ID`="' + target.id + '";';
 			connection.query(query, function (error, results, fields) {});
-		});
-	  });
     }
     else if (type === "mute") {
       target.setMute(false, extra.note);
