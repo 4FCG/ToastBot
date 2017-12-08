@@ -40,9 +40,9 @@ module.exports =  {
   },
   remove: function (target, type, extra) {
     if (type === "ban") {
-			target.unban(target, extra.note);
-			let query = 'DELETE FROM `' + extra.id + '_status` WHERE `Type`="Ban" AND `User_ID`="' + target.id + '";';
-			connection.query(query, function (error, results, fields) {});
+		target.unban(target, extra.note);
+		let query = 'DELETE FROM `' + extra.id + '_status` WHERE `Type`="Ban" AND `User_ID`="' + target.id + '";';
+		connection.query(query, function (error, results, fields) {});
     }
     else if (type === "mute") {
       target.setMute(false, extra.note);
@@ -53,7 +53,7 @@ module.exports =  {
     }
   	else if (type === "warn") {
   		let query = 'DELETE FROM ?? WHERE `Status_ID`=? AND `Type`="Warn";';
-  		let inserts = [target.guild.id + '_status', extra.id];
+  		let inserts = [target.id + '_status', extra.id];
   		query = mysql.format(query, inserts);
   		connection.query(query, function (error, results, fields) {});
   	}

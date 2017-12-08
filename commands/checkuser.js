@@ -18,7 +18,7 @@ module.exports = {
               let info = {sources : [], replacer : []};
               for (C = 0; C < results.length; C++) {
                 let time = Math.round(((results[C].Expire_Time - date.getTime()) / 1000) / 60);
-                string = string + `${target.user.username} has reveived a ${results[C].Type} from ${results[C].Given_By_ID} that will last ${time} more minutes. The reason was: "${results[C].Comment}"\n`
+                string = string + `${target.user.username} has reveived a ${results[C].Type} (ID = ${results[C].Status_ID}) from ${results[C].Given_By_ID} that will last ${time} more minutes. The reason was: "${results[C].Comment}"\n`
                 let source = new Promise((resolve,reject) => {
                   Client.bot.fetchUser(results[C].Given_By_ID)
                   .then(user => {

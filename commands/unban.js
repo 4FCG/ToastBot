@@ -11,19 +11,11 @@ module.exports = {
 				let query = 'SELECT User_ID AS id FROM ?? WHERE `Status_ID`=? AND `Type`="Ban";';
 				let inserts = [message.guild.id + '_status', args[0]];
 				connection.query(mysql.format(query, inserts), function (error, results, fields) {
-					if (results[0].id.length > 0) {
+					if (results.length > 0) {
 						client.bot.fetchUser(results[0].id)
 						.then(target => {
-							target.guild.fetchBans()
-							.then(bans => {
-								if(bans.get(target.id)){
 									if (!args[1]) {args[1]=' ';}
 									status.remove(target, 'ban', {note: args[1], id : message.guild.id});
-								}
-								else {
-									message.channel.send('Failed to ban the user, missing permissions or the user is already banned.');
-								}
-							});
 						});
 					}
 					else {
