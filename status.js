@@ -45,9 +45,10 @@ module.exports =  {
 		connection.query(query, function (error, results, fields) {});
     }
     else if (type === "mute") {
+	  target = server.member(target);
       target.setMute(false, note);
       let mute = server.roles.find('name', 'toastbot_mute');
-      target.removeRole(mute); //guild user dependant but no guild user given needs fix
+      target.removeRole(mute);
       let query = 'DELETE FROM `' + server.id + '_status` WHERE `Type`="Mute" AND `User_ID`="' + target.id + '";';
       connection.query(query, function (error, results, fields) {});
     }
