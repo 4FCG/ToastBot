@@ -12,7 +12,7 @@ module.exports = {
 				let inserts = [message.guild.id + '_status', args[0]];
 				connection.query(mysql.format(query, inserts), function (error, results, fields) {
 					if (results.length > 0) {
-						status.remove(message.guild, 'warn', {id : args[0]});
+						status.remove(args[0], 'warn', 'NaN', message.guild, 'NaN');
 						message.channel.send(`The warning with the id ${results[0].Status_ID} has been removed.`);
 					}
 					else {
@@ -23,5 +23,6 @@ module.exports = {
 			else {
 				message.channel.send("Please supply the proper arguments: unwarn, warn_id");
 			}
+			message.delete(5000);
     }
 }

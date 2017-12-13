@@ -37,7 +37,7 @@ module.exports = {
               });
             }
             else {
-              message.channel.send(`${target.user.username} has no current warns bans or mutes.`)
+              message.channel.send(`${target.user.username} has no current warns or mutes.`)
             }
           });
       }

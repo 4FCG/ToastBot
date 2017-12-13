@@ -3,7 +3,7 @@ const connection = main.connect;
 const status = require('../status.js');
 
 module.exports = {
-    Description: 'Unban a user.',
+    Description: 'Remove a ban.',
     Usage: 'unban, ban_id, [reason]',
     func: (Client, message, args) => {
 			args[0] = Number(args[0].replace(" ", ""));
@@ -14,8 +14,9 @@ module.exports = {
 					if (results.length > 0) {
 						client.bot.fetchUser(results[0].id)
 						.then(target => {
-									if (!args[1]) {args[1]=' ';}
-									status.remove(target, 'ban', {note: args[1], id : message.guild.id});
+							if (!args[1]) {args[1]=' ';}
+							status.remove(args[0], 'ban', target, message.guild, args[1]);
+							message.channel.send(`${target.username} has been unbanned.`);
 						});
 					}
 					else {
@@ -26,5 +27,6 @@ module.exports = {
 			else {
 				message.channel.send("Please supply the proper arguments: unban, ban_id, [reason]");
 			}
+			message.delete(5000);
     }
 }
