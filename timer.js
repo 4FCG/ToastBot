@@ -9,7 +9,10 @@ module.exports = function () {
 		client.connect.query(query, function (error, results, fields) {
 			for (C = 0; C < results.length; C++) {
 				if (results[C].Expire_Time < time) {
-					status.remove()
+					client.bot.fetchUser(results[C].User_ID)
+					.then(targ => {
+						status.remove(results[C].Status_ID, results[C].Type.toLowerCase(), targ, guild, "Time Expired");
+					});
 				}
 			}
 		});

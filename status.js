@@ -38,22 +38,22 @@ module.exports =  {
       connection.query(query, function (error, results, fields) {});
     }
   },
-  remove: function (target, type, extra) {
+  remove: function (id, type, target, server, note) {
     if (type === "ban") {
-		target.unban(target, extra.note);
-		let query = 'DELETE FROM `' + extra.id + '_status` WHERE `Type`="Ban" AND `User_ID`="' + target.id + '";';
+		target.unban(target, note);
+		let query = 'DELETE FROM `' + server + '_status` WHERE `Type`="Ban" AND `User_ID`="' + target.id + '";';
 		connection.query(query, function (error, results, fields) {});
     }
     else if (type === "mute") {
-      target.setMute(false, extra.note);
-      let mute = target.guild.roles.find('name', 'toastbot_mute');
-      target.removeRole(mute);
-      let query = 'DELETE FROM `' + target.guild.id + '_status` WHERE `Type`="Mute" AND `User_ID`="' + target.id + '";';
+      target.setMute(false, note);
+      let mute = server.roles.find('name', 'toastbot_mute');
+      target.removeRole(mute); //guild user dependant but no guild user given needs fix
+      let query = 'DELETE FROM `' + server.id + '_status` WHERE `Type`="Mute" AND `User_ID`="' + target.id + '";';
       connection.query(query, function (error, results, fields) {});
     }
   	else if (type === "warn") {
   		let query = 'DELETE FROM ?? WHERE `Status_ID`=? AND `Type`="Warn";';
-  		let inserts = [target.id + '_status', extra.id];
+  		let inserts = [server.id + '_status', id];
   		query = mysql.format(query, inserts);
   		connection.query(query, function (error, results, fields) {});
   	}
