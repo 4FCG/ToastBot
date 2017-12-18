@@ -48,7 +48,11 @@ Client.bot.on("message", (message) => {
     Promise.all(Client.perms.func(`${argument[0]}.js`, message, conn)).then(results => {
       if (results.includes("error")) {return message.reply("Something went wrong while checking permissions.");}
       else if (results.includes(true)) {
-        Client.commands[argument[0]].func(Client, message, argument.slice(1), conn);
+		Client.commands.forEach(function(command) {
+			if (command.Alias.includes(argument[0])) {
+				command.func(Client, message, argument.slice(1), conn);
+			}
+		});
       }
       else {
         return message.reply("You do not have permission to use this command.");

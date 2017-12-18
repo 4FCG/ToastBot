@@ -6,6 +6,7 @@ const mysql = require('mysql');
 module.exports = {
     Description: 'check a users warns/ban or mute',
     Usage: 'checkuser, @user',
+	Alias: ['checkuser', 'Checkuser', 'CheckUser'],
     func: (Client, message) => {
       if (typeof message.mentions.members.first() !== 'undefined') {
           let date = new Date();

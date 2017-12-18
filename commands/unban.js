@@ -5,6 +5,7 @@ const status = require('../status.js');
 module.exports = {
     Description: 'Remove a ban.',
     Usage: 'unban, ban_id, [reason]',
+	Alias: ['unban', 'Unban', 'UnBan'],
     func: (Client, message, args) => {
 			args[0] = Number(args[0].replace(" ", ""));
 			if (Number.isInteger(args[0])) {

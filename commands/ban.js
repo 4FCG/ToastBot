@@ -5,6 +5,7 @@ const status = require('../status.js');
 module.exports = {
     Description: 'Ban a user.',
     Usage: 'ban, @user, time(minutes), [reason]',
+	Alias: ['ban', 'Ban'],
     func: (Client, message, args) => {
       args[1] = Number(args[1].replace(" ", ""));
 			if (typeof message.mentions.members.first() !== 'undefined' && Number.isInteger(args[1])) {

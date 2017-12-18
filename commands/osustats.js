@@ -2,7 +2,8 @@ const fs = require('fs');
 const osu = require('osu-call');
 module.exports = {
     Description: 'Displays general osu stats of the username given.',
-    Usage: 'osustats,|username|',
+    Usage: 'osustats, username',
+	Alias: ['osustats', 'OsuStats', 'Osustats', 'osu'],
     func: (client, msg, args) => {
       osu.give_key(client.config.osutoken);
       if (args[0]) {

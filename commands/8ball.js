@@ -1,6 +1,7 @@
 module.exports = {
     Description: 'Have the magic 8ball answer your question.',
-    Usage: '8ball,|question|',
+    Usage: '8ball, question',
+	Alias: ['8ball', '8Ball'],
     func: (client, msg, args) => {
       if(args[0]){
         var answers = ["Yes", "No", "Probably", "Probably not", "Certainly", "Impossible"];

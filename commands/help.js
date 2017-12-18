@@ -1,6 +1,7 @@
 module.exports = {
     Description: 'Use the help command to learn more about a given command.',
-    Usage: 'help,|command|',
+    Usage: 'help, command',
+	Alias: ['help', 'Help', 'commands', 'Commands', '?'],
     func: (client, msg, args) => {
       if (args[0]) {
         console.log(args[0])

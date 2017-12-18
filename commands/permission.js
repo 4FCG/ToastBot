@@ -5,8 +5,10 @@ const fs = require('fs');
 module.exports = {
     Description: 'Main command for changing and checking permissions.',
     Usage: 'permission',
+	Alias: ['permission', 'Permission', 'perm'],
     func: (client, msg, args, connection) => {
-        if (args[0] === "commands") {
+		//command lister redundant once help command is fixed
+        if (args[0] === "commands") { 
           let list = `List of commands:\n`;
           fs.readdirSync('./commands/').forEach(function(command){
             list = `${list}'${command.slice(0,command.length - 3)}'\n`;

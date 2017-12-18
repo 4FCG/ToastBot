@@ -3,6 +3,7 @@ const main = require('../main.js');
 module.exports = {
     Description: 'List all bans made with the bot on this server.',
     Usage: 'bans',
+	Alias: ['bans', 'Bans', 'banlist', 'listbans'],
     func: (Client, message, args) => {
 		let date = new Date();
 		let time = date.getTime();

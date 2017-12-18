@@ -1,7 +1,8 @@
 const urban = require('relevant-urban');
 module.exports = {
     Description: 'Do a search on urban dictionary.',
-    Usage: 'urban,|word| OR |random|',
+    Usage: 'urban, word || random',
+	Alias: ['urban', 'Urban', 'urbandictionary'],
     func: (client, msg, args) => {
       let result = new Promise((resolve,reject) => {
         if (args[0] !== 'random') {

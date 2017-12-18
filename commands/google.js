@@ -2,7 +2,8 @@ const google = require("google");
 google.resultsPerPage = 10;
 module.exports = {
     Description: 'Googles for the given argument',
-    Usage: 'google,|argument|',
+    Usage: 'google, argument',
+	Alias: ['google', 'Google', 'search', 'gl'],
     func: (client, msg, args) => {
       google(args[0], function (err, res){
         if (err) {console.error(err);}

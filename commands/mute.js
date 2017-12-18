@@ -5,6 +5,7 @@ const status = require('../status.js');
 module.exports = {
     Description: 'Mute a user.',
     Usage: 'mute, @user, time(minutes), [reason]',
+	Alias: ['mute', 'Mute'],
     func: (Client, message, args) => {
       args[1] = Number(args[1].replace(" ", ""));
 			if (typeof message.mentions.members.first() !== 'undefined' && Number.isInteger(args[1])) {
