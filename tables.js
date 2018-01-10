@@ -6,10 +6,13 @@ module.exports = {
   func: (Client, msg, args, connection) => {
     Client.bot.guilds.array().forEach(function(guild){
 
-      if (guild.roles.find('name', 'toastbot_mute') === null) {
-        guild.createRole({name: 'toastbot_mute'})
-        .then(rolee => console.log(`Created role ${rolee}`));
-      }
+      guild.fetchMember(Client.bot.user)
+      .then(gmember => {
+        if (guild.roles.find('name', 'toastbot_mute') === null && gmember.permissions.has('MANAGE_ROLES')) {
+          guild.createRole({name: 'toastbot_mute'})
+          .then(rolee => console.log(`Created role ${rolee} in ${guild.name}`));
+        }
+      });
 
       let query = 'CREATE TABLE IF NOT EXISTS`' + guild.id + '` (`roles` VARCHAR(45) NOT NULL,';
       fs.readdirSync('./commands/').forEach(function(command){
@@ -29,5 +32,4 @@ module.exports = {
   }
 }
 
-//connection.end(function(err) {
-//});
+//member.permissions.has('0x10000000');

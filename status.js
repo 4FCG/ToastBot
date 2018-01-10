@@ -53,6 +53,7 @@ module.exports =  {
       connection.query(query, function (error, results, fields) {});
     }
   	else if (type === "warn") {
+
   		let query = 'DELETE FROM ?? WHERE `Status_ID`=? AND `Type`="Warn";';
   		let inserts = [server.id + '_status', id];
   		query = mysql.format(query, inserts);
