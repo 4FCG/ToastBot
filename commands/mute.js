@@ -7,12 +7,13 @@ module.exports = {
     Usage: 'mute, @user, time(minutes), [reason]',
 	Alias: ['mute', 'Mute'],
     func: (Client, message, args) => {
+      if(!args[1]){return message.channel.send("Please supply the proper arguments: mute, @user, time(in minutes), [reason]");}
       args[1] = Number(args[1].replace(" ", ""));
 			if (typeof message.mentions.members.first() !== 'undefined' && Number.isInteger(args[1])) {
 				let target = message.mentions.members.first();
 				let query = 'SELECT COUNT(Status_ID) AS data FROM `' + target.guild.id + '_status` WHERE `Type`="Mute" AND `User_ID`="' + target.id + '";';
 				connection.query(query, function (error, results, fields) {
-					if(results[0].data === 0 && !target.serverMute){
+					if(results[0].data === 0){
 						let date = new Date();
 						let time = date.getTime() + ((args[1]*60)*1000);
 						if (!args[2]) {args[2]=' ';}
@@ -26,5 +27,6 @@ module.exports = {
 			else {
 				message.channel.send("Please supply the proper arguments: mute, @user, time(in minutes), [reason]");
 			}
+      message.delete(5000);
     }
 }

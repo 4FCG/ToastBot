@@ -46,7 +46,9 @@ module.exports =  {
     else if (type === "mute") {
 	     target = server.member(target);
       let mute = server.roles.find('name', 'toastbot_mute');
-      target.removeRole(mute);
+      if (target.roles.get(mute.id)) {
+        target.removeRole(mute.id);
+      }
       let query = 'DELETE FROM `' + server.id + '_status` WHERE `Type`="Mute" AND `User_ID`="' + target.id + '";';
       connection.query(query, function (error, results, fields) {});
     }
