@@ -42,6 +42,10 @@ module.exports = {
             }
           });
       }
+      else {
+        message.channel.send(`Please ping a user as argument.`)
+      }
+      message.delete(5000);
     }
 }
 

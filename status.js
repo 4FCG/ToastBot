@@ -28,10 +28,9 @@ module.exports =  {
       });
     }
     else if (type === "mute") {
-      target.setMute(true, note);
       let mute = target.guild.roles.find('name', 'toastbot_mute');
       if (!target.roles.get(mute.id)) {
-        target.addRole(mute);
+        target.addRole(mute.id);
       }
 	  let inserts = [target.guild.id + '_status', target.id, source, 'Mute', time, note];
 	  let query = mysql.format(query_INSERT, inserts);
@@ -40,13 +39,12 @@ module.exports =  {
   },
   remove: function (id, type, target, server, note) {
     if (type === "ban") {
-		target.unban(target, note);
-		let query = 'DELETE FROM `' + server + '_status` WHERE `Type`="Ban" AND `User_ID`="' + target.id + '";';
+		server.unban(target, note);
+		let query = 'DELETE FROM `' + server.id + '_status` WHERE `Type`="Ban" AND `User_ID`="' + target.id + '";';
 		connection.query(query, function (error, results, fields) {});
     }
     else if (type === "mute") {
-	  target = server.member(target);
-      target.setMute(false, note);
+	     target = server.member(target);
       let mute = server.roles.find('name', 'toastbot_mute');
       target.removeRole(mute);
       let query = 'DELETE FROM `' + server.id + '_status` WHERE `Type`="Mute" AND `User_ID`="' + target.id + '";';

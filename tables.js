@@ -9,8 +9,8 @@ module.exports = {
       guild.fetchMember(Client.bot.user)
       .then(gmember => {
         if (guild.roles.find('name', 'toastbot_mute') === null && gmember.permissions.has('MANAGE_ROLES')) {
-          guild.createRole({name: 'toastbot_mute'})
-          .then(rolee => console.log(`Created role ${rolee} in ${guild.name}`));
+          guild.createRole({name: 'toastbot_mute', position: guild.roles.keyArray().length - 1, permissions: ['VIEW_CHANNEL', 'READ_MESSAGE_HISTORY', 'CONNECT']})
+          .then(rolee => console.log(`Created role ${rolee.name} in ${guild.name}`));
         }
       });
 
@@ -31,5 +31,3 @@ module.exports = {
     });
   }
 }
-
-//member.permissions.has('0x10000000');

@@ -1,12 +1,14 @@
 const main = require('../main.js');
 const connection = main.connect;
 const status = require('../status.js');
+const mysql = require('mysql');
 
 module.exports = {
     Description: 'Remove a warn from a user.',
     Usage: 'unwarn, warn_id',
 	Alias: ['unwarn', 'Unwarn', 'UnWarn'],
     func: (Client, message, args) => {
+      if(!args[0]){return message.channel.send("Please supply the proper arguments: unwarn, warn_id");}
 			args[0] = Number(args[0].replace(" ", ""));
 			if (Number.isInteger(args[0])) {
 				let query = 'SELECT * FROM ?? WHERE `Status_ID`=? AND `Type`="Warn";';

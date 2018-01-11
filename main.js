@@ -37,7 +37,7 @@ Client.timer = require("./timer.js");
 Client.load.func(Client);
 
 Client.bot.on("ready", () => {
-  setInterval(Client.timer, 10000);
+  setInterval(Client.timer, 60000);
   Client.table.func(Client, 1, 1, conn);
 	console.log("Bot is connected!");
   console.log("Prefix set to " + Client.config.prefix);
