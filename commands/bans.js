@@ -8,7 +8,8 @@ module.exports = {
 		let date = new Date();
 		let time = date.getTime();
 		let query = 'SELECT * FROM ' + message.guild.id + ' WHERE `Type`="Ban";';
-		connection.query(query, function (error, results, fields) {
+		main.connect.query(query, function (error, results, fields) {
+      if (results.length <= 0) {return message.channel.send('There currently are no bans.');}
 			results.forEach(function(row){
 				Promise.all([client.bot.fetchUser(row.User_ID), client.bot.fetchUser(row.Given_By_ID)])
 				.then(users => {
